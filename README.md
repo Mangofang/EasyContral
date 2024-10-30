@@ -17,6 +17,7 @@
 
 ## 使用流程
 添加URL ACL，管理员模式启动CMD：netsh http add urlacl url=http://+:4400/ user=Everyone
+
 控制端默认监听`4400`端口，防火墙开放`4400`端口
 
 ## 通信流程：
