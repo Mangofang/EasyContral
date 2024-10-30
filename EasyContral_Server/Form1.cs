@@ -189,14 +189,15 @@ namespace EasyContral_Server
                     responseDic.Add("Data", Data);
                 }
 
-                byte[] buffer = Encoding.UTF8.GetBytes(AESEncrypt(DicToJson(responseDic),Key,IV));
+                byte[] buffer = Encoding.UTF8.GetBytes(AESEncrypt(DicToJson(responseDic), Key, IV));
                 response.ContentLength64 = buffer.Length;
                 response.OutputStream.Write(buffer, 0, buffer.Length);
                 response.OutputStream.Close();
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
                 responseDic.Clear();
+                return;
             }
         }
         private void SendToMessage(Dictionary<string, string> State, Dictionary<string, string> Data, Dictionary<string, string> Jobe, string Type)
