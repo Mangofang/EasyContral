@@ -24,7 +24,7 @@
 
 被控端获取返回请求体并执行对应指令，并发送执行结果
 
-<img src="https://github.com/user-attachments/assets/ee3e0e01-2b62-4e72-aee2-568e642b6b6f" width="40%">
+<img src="https://github.com/user-attachments/assets/ee3e0e01-2b62-4e72-aee2-568e642b6b6f" width="50%">
 
 ## 已实现功能
 1. CMD
