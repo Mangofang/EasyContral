@@ -117,10 +117,10 @@
             this.FileContral,
             this.DesktopContral,
             this.ProcessContral,
-            this.Edit,
-            this.Remove});
+            this.Edit});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(301, 276);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(301, 238);
+            // 
             // 
             // GetShell
             // 
@@ -156,13 +156,6 @@
             this.Edit.Size = new System.Drawing.Size(300, 38);
             this.Edit.Text = "设置响应时间";
             this.Edit.Click += new System.EventHandler(this.Edit_Click);
-            // 
-            // Remove
-            // 
-            this.Remove.Name = "Remove";
-            this.Remove.Size = new System.Drawing.Size(300, 38);
-            this.Remove.Text = "删除";
-            this.Remove.Click += new System.EventHandler(this.Remove_Click);
             // 
             // richTextBox1
             // 
@@ -213,7 +206,6 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.ToolStripMenuItem ProcessContral;
         private System.Windows.Forms.ToolStripMenuItem Edit;
-        private System.Windows.Forms.ToolStripMenuItem Remove;
     }
 }
 
