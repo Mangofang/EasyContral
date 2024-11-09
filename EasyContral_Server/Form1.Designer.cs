@@ -43,8 +43,10 @@
             this.DesktopContral = new System.Windows.Forms.ToolStripMenuItem();
             this.ProcessContral = new System.Windows.Forms.ToolStripMenuItem();
             this.Edit = new System.Windows.Forms.ToolStripMenuItem();
-            this.Remove = new System.Windows.Forms.ToolStripMenuItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.AutoRunContral = new System.Windows.Forms.ToolStripMenuItem();
+            this.Registry = new System.Windows.Forms.ToolStripMenuItem();
+            this.TaskScheduler = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -117,8 +119,8 @@
             this.FileContral,
             this.DesktopContral,
             this.ProcessContral,
-            this.Edit,
-            this.Remove});
+            this.AutoRunContral,
+            this.Edit});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(301, 276);
             // 
@@ -157,13 +159,6 @@
             this.Edit.Text = "设置响应时间";
             this.Edit.Click += new System.EventHandler(this.Edit_Click);
             // 
-            // Remove
-            // 
-            this.Remove.Name = "Remove";
-            this.Remove.Size = new System.Drawing.Size(300, 38);
-            this.Remove.Text = "删除";
-            this.Remove.Click += new System.EventHandler(this.Remove_Click);
-            // 
             // richTextBox1
             // 
             this.richTextBox1.BackColor = System.Drawing.SystemColors.MenuText;
@@ -176,6 +171,29 @@
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            // 
+            // AutoRunContral
+            // 
+            this.AutoRunContral.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Registry,
+            this.TaskScheduler});
+            this.AutoRunContral.Name = "AutoRunContral";
+            this.AutoRunContral.Size = new System.Drawing.Size(300, 38);
+            this.AutoRunContral.Text = "自启动";
+            // 
+            // Registry
+            // 
+            this.Registry.Name = "Registry";
+            this.Registry.Size = new System.Drawing.Size(359, 44);
+            this.Registry.Text = "通过注册表";
+            this.Registry.Click += new System.EventHandler(this.Registry_Click);
+            // 
+            // TaskScheduler
+            // 
+            this.TaskScheduler.Name = "TaskScheduler";
+            this.TaskScheduler.Size = new System.Drawing.Size(359, 44);
+            this.TaskScheduler.Text = "通过计划任务";
+            this.TaskScheduler.Click += new System.EventHandler(this.TaskScheduler_Click);
             // 
             // Form1
             // 
@@ -213,7 +231,9 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.ToolStripMenuItem ProcessContral;
         private System.Windows.Forms.ToolStripMenuItem Edit;
-        private System.Windows.Forms.ToolStripMenuItem Remove;
+        private System.Windows.Forms.ToolStripMenuItem AutoRunContral;
+        private System.Windows.Forms.ToolStripMenuItem Registry;
+        private System.Windows.Forms.ToolStripMenuItem TaskScheduler;
     }
 }
 

