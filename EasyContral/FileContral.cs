@@ -39,9 +39,8 @@ namespace EasyContral
                 string jsonResult = JsonConvert.SerializeObject(fileSystemInfo, Formatting.Indented);
                 return jsonResult;
             }
-            catch (DirectoryNotFoundException ex)
+            catch (Exception ex)
             {
-
                 return "";
             }
         }

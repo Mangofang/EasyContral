@@ -144,7 +144,8 @@ namespace EasyContral
             while (true)
             {
                 ulong now = GetNetworkTimeInSeconds();
-                if (now - time == 2)
+                //Console.WriteLine(now - time);
+                if (now - time == 5)
                 {
                     return false;
                 }
