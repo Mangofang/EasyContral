@@ -9,6 +9,8 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
+using static System.Windows.Forms.AxHost;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace EasyContral_Server
 {
