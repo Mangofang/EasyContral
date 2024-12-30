@@ -41,7 +41,7 @@
 <img src="https://github.com/user-attachments/assets/d675aaf1-9f2d-483f-8306-e4ff3e7c71f9" width="40%">
 
 4. 屏幕监控
-5. 线程管理（进启动线程、关闭线程、查看线程）
+5. 进程管理（启动进程、关闭进程、查看进程）
 
 ## 更新
 2024年12月29日
