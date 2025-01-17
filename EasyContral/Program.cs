@@ -14,6 +14,7 @@ namespace EasyContral
 {
     internal class Program
     {
+        static string Server_Ip = "cloud.foreverhome.live";// Server端地址
         static string Key = "jV5lO66M/CmXk3OP067sLbgfYTAanFcAT8oOhSzUYtw=";
         static string IV = "rNQez1Kfq8OqujG5EuyrVA==";
 
@@ -54,7 +55,7 @@ namespace EasyContral
                     string JsonMessage = DicToJson(DicMessage);
                     JsonMessage = AESEncrypt(JsonMessage, Key, IV);
                     var content = new StringContent(JsonMessage, Encoding.UTF8, "application/json");
-                    HttpResponseMessage Response = client.PostAsync("http://127.0.0.1:4400/", content).Result;
+                    HttpResponseMessage Response = client.PostAsync($"http://{Server_Ip}:4400/", content).Result;
                     string ResponseBody = Response.Content.ReadAsStringAsync().Result;
                     ResponseBody = AESDecrypt(ResponseBody, Key, IV);
                     Dictionary<string, Dictionary<string, string>> result = new Dictionary<string, Dictionary<string, string>>();
@@ -144,8 +145,8 @@ namespace EasyContral
             while (true)
             {
                 ulong now = GetNetworkTimeInSeconds();
-                //Console.WriteLine(now - time);
-                if (now - time == 60)
+                Console.WriteLine(now - time);
+                if (now - time >= 60)
                 {
                     return false;
                 }
@@ -172,6 +173,7 @@ namespace EasyContral
             fractPart = SwapEndianness(fractPart);
             ulong milliseconds = (intPart * 1000) + ((fractPart * 1000) / 0x100000000L);
             ulong seconds = milliseconds / 1000;
+            Thread.Sleep(5000);
             return seconds;
         }
         private static uint SwapEndianness(ulong x)
@@ -199,7 +201,7 @@ namespace EasyContral
             string JsonMessage_ = DicToJson(DicMessage);
             JsonMessage_ = AESEncrypt(JsonMessage_, Key, IV);
             var content_ = new StringContent(JsonMessage_, Encoding.UTF8, "application/json");
-            client_.PostAsync("http://127.0.0.1:4400/", content_);
+            client_.PostAsync($"http://{Server_Ip}:4400/", content_);
         }
         static string DicToJson(Dictionary<string,Dictionary<string,string>> DicMessage)
         {
