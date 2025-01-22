@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyContral", "EasyContral\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyContral_Server", "EasyContral_Server\EasyContral_Server.csproj", "{9C3449CB-13EC-4D5B-BC8F-C96E69D4735B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{D18CD52B-D26A-41B7-9C2A-3BBD46CB1C43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9C3449CB-13EC-4D5B-BC8F-C96E69D4735B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C3449CB-13EC-4D5B-BC8F-C96E69D4735B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C3449CB-13EC-4D5B-BC8F-C96E69D4735B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D18CD52B-D26A-41B7-9C2A-3BBD46CB1C43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D18CD52B-D26A-41B7-9C2A-3BBD46CB1C43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D18CD52B-D26A-41B7-9C2A-3BBD46CB1C43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D18CD52B-D26A-41B7-9C2A-3BBD46CB1C43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

